@@ -99,3 +99,25 @@ function drawPrimitive(primitiveType, color, vertices) {
     gl.drawArrays(primitiveType, 0, vertices.length / 3);
 }
 ```
+The 3D cube after rotation (from another pov)
+
+![image](https://github.com/thossb/2D3D_Graphics_WebGl_GlMatrix/assets/90438426/b5ce97ef-b6b1-4964-9580-9f917c8fc123)
+
+Modified code plus documentation
+```
+function draw() { 
+    gl.clearColor(0,0,0,1);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    
+    /* Draw the six faces of a cube, with different colors. */
+    
+    drawPrimitive( gl.TRIANGLE_FAN, [1,0.5,0,1], [ -0.5,-0.5,-0.5, -0.5,0.3,-0.5, 0.3,0.3,-0.5, 0.3,-0.5,-0.5 ]);     //front face
+    drawPrimitive( gl.TRIANGLE_FAN, [0,1,0,1], [ -0.5,0.3,0.5, -0.3,0.5,0.5, 0.5,0.5,-0.5, 0.3,0.3,-0.5 ]);         //left face
+    drawPrimitive( gl.TRIANGLE_FAN, [1,0,0,1], [ -0.5,-0.5,0.5, -0.3,-0.3,-0.5, 0.5,-0.3,-0.3, 0.3,-0.5,-0.5 ]);  // Right Face 
+    drawPrimitive( gl.TRIANGLE_FAN, [0,0,1,1], [ 0.3,-0.5,-0.5, 0.3,0.3,-0.5, 0.5,0.5,-0.5, 0.5,-0.3,-0.5 ]);       // Top Face
+    drawPrimitive( gl.TRIANGLE_FAN, [1,1,0,1], [ -0.5,-0.5,0.5, -0.3,-0.3,0.5, -0.3,0.5,0.5, -0.5,0.3,0.5 ]);       // Bottom Face
+    drawPrimitive( gl.TRIANGLE_FAN, [1,0,1,1], [ 0.5,-0.3,0.5, -0.3,-0.3,0.5, -0.3,0.5,0.5, 0.5,0.5,0.5 ]);         // Back Face
+
+}
+```
+
