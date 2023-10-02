@@ -55,4 +55,47 @@ function draw() {
 }
 ```
   
-2. 
+2. Show the sides of 3D cube <br>
+A 3D Cube with 1 front side open 
+![image](https://github.com/thossb/2D3D_Graphics_WebGl_GlMatrix/assets/90438426/94fffca5-068e-4f32-bbbc-fd4e2f197224)
+
+Modified code plus documentation
+
+```
+function draw() { 
+    gl.clearColor(0,0,0,1);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    
+    /* Draw the six faces of a cube, with different colors. */
+    
+    //drawPrimitive( gl.TRIANGLE_FAN, [0,1,0,1], [ -0.5,-0.5,-0.5, -0.5,0.3,-0.5, 0.3,0.3,-0.5, 0.3,-0.5,-0.5 ]);   //front face (dihilangkan)
+    drawPrimitive( gl.TRIANGLE_FAN, [1,0,0,1], [ -0.5,0.3,0.5, -0.3,0.5,0.5, 0.5,0.5,-0.5, 0.3,0.3,-0.5 ]);         //left face
+    drawPrimitive( gl.TRIANGLE_FAN, [0,0,1,1], [ 0.3,-0.5,-0.5, 0.3,0.3,-0.5, 0.5,0.5,-0.5, 0.5,-0.3,-0.5 ]);       // Top Face
+    drawPrimitive( gl.TRIANGLE_FAN, [1,0.5,0,1], [ -0.5,-0.5,0.5, -0.3,-0.3,-0.5, 0.5,-0.3,-0.3, 0.3,-0.5,-0.5 ]);  // Right Face 
+    drawPrimitive( gl.TRIANGLE_FAN, [1,1,0,1], [ -0.5,-0.5,0.5, -0.3,-0.3,0.5, -0.3,0.5,0.5, -0.5,0.3,0.5 ]);       // Bottom Face
+    drawPrimitive( gl.TRIANGLE_FAN, [1,0,1,1], [ 0.5,-0.3,0.5, -0.3,-0.3,0.5, -0.3,0.5,0.5, 0.5,0.5,0.5 ]);         // Back Face
+
+}
+```
+Explanation of the drawprimitive function
+```
+function drawPrimitive(primitiveType, color, vertices) {
+    // Enable the attribute for vertex coordinates in the shader program.
+    gl.enableVertexAttribArray(a_coords_loc);
+
+    // Bind the vertex buffer containing the vertex data.
+    gl.bindBuffer(gl.ARRAY_BUFFER, a_coords_buffer);
+
+    // Copy the vertex data into the bound buffer as a Float32Array and specify usage as STREAM_DRAW.
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STREAM_DRAW);
+
+    // Set the uniform color variable in the shader program to the specified color.
+    gl.uniform4fv(u_color, color);
+
+    // Define how to interpret the vertex data in the buffer and specify its layout.
+    gl.vertexAttribPointer(a_coords_loc, 3, gl.FLOAT, false, 0, 0);
+
+    // Draw the primitive using the specified primitive type and the vertex data.
+    gl.drawArrays(primitiveType, 0, vertices.length / 3);
+}
+```
